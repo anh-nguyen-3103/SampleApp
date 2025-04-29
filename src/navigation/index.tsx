@@ -1,13 +1,13 @@
 import {
-    createDrawerNavigator,
-    DrawerContent,
-    DrawerContentComponentProps,
-    DrawerNavigationOptions,
+  createDrawerNavigator,
+  DrawerContent,
+  DrawerContentComponentProps,
+  DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import {
-    createNativeStackNavigator,
-    NativeStackNavigationOptions,
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import HeaderDrawer from '../components/drawers/HeaderDrawer';
 import HomeScreen from '../screens/home';
@@ -73,7 +73,7 @@ const RootStack = createNativeStackNavigator<RootParamList>();
 const RootNavigation = () => {
   return (
     <NavigationContainer>
-      <RootStack.Navigator screenOptions={rootOptions} initialRouteName={'Splash'}>
+      <RootStack.Navigator screenOptions={rootOptions}>
         <RootStack.Screen name={'Splash'} component={SplashScreen} />
         <RootStack.Screen name={'Main'} component={DrawerNavigation} />
       </RootStack.Navigator>

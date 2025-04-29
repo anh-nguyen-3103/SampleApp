@@ -1,22 +1,41 @@
-import React, { useEffect, useRef } from 'react';
+import React, { createContext, FC, useContext, useEffect, useRef, useState } from 'react';
 import { AppState, View } from 'react-native';
 
-type AppStateWrapperType = {
-  children?: React.ReactNode;
+type AppStateContextType = {
+  currentAppState: string;
+  isActive: boolean;
+  lastActiveTimestamp: number | null;
 };
 
-const AppStateWrapper = ({ children }: AppStateWrapperType) => {
-  const appState = useRef(AppState.currentState);
+const AppStateContext = createContext<AppStateContextType>({
+  currentAppState: AppState.currentState,
+  isActive: AppState.currentState === 'active',
+  lastActiveTimestamp: null,
+});
+
+type Props = { children?: React.ReactNode };
+
+export const AppStateWrapper: FC<Props> = ({ children }) => {
+  const appStateRef = useRef(AppState.currentState);
+  const [currentAppState, setCurrentAppState] = useState(AppState.currentState);
+  const [isActive, setIsActive] = useState(AppState.currentState === 'active');
+  const [lastActiveTimestamp, setLastActiveTimestamp] = useState<number | null>(
+    AppState.currentState === 'active' ? Date.now() : null,
+  );
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
-      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+      if (appStateRef.current.match(/inactive|background/) && nextAppState === 'active') {
         console.info('[AppStateWrapper]: App has come to the foreground!');
+        setIsActive(true);
+        setLastActiveTimestamp(Date.now());
       } else if (nextAppState.match(/inactive|background/)) {
         console.info('[AppStateWrapper]: App has gone to the background!');
+        setIsActive(false);
       }
 
-      appState.current = nextAppState;
+      appStateRef.current = nextAppState;
+      setCurrentAppState(nextAppState);
     });
 
     return () => {
@@ -24,7 +43,13 @@ const AppStateWrapper = ({ children }: AppStateWrapperType) => {
     };
   }, []);
 
-  return <View>{children}</View>;
+  const contextValue: AppStateContextType = { currentAppState, isActive, lastActiveTimestamp };
+
+  return (
+    <AppStateContext.Provider value={contextValue}>
+      <View style={{ flex: 1 }}>{children}</View>
+    </AppStateContext.Provider>
+  );
 };
 
-export default AppStateWrapper;
+export const useAppState = () => useContext(AppStateContext);

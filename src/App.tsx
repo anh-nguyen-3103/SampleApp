@@ -2,7 +2,7 @@
 import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AppStateWrapper from './components/AppStateWrapper';
+import { AppStateWrapper } from './components/AppStateWrapper';
 import { RootNavigation } from './navigation';
 
 const App = () => {
