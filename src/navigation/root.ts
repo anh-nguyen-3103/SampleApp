@@ -1,31 +1,23 @@
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
+import { RouteProp } from '@react-navigation/native';
 
 export type RootParamList = {
     Splash: undefined;
+    Registration: undefined;
     Main: MainParamList | undefined;
 };
 
 export type MainParamList = {
     Home: undefined;
-    Settings: undefined;
-    Weather: undefined;
-    Todo: undefined;
 };
 
-
-export type AppNavigationProp = CompositeNavigationProp<
-    NativeStackNavigationProp<RootParamList>,
-    DrawerNavigationProp<MainParamList>
+export type AppNavigationProp = NativeStackNavigationProp<
+    RootParamList & MainParamList
 >;
-
 
 export type AppRouteProp<T extends keyof RootParamList | keyof MainParamList> = RouteProp<
     RootParamList & MainParamList,
     T
 >;
-
 
 export type AppScreens = keyof RootParamList | keyof MainParamList;

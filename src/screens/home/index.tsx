@@ -1,21 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
+import { useAppState } from '../../components/AppStateWrapper';
+import { AppText } from '../../components/AppText';
+import { styles } from './styles';
 
 const HomeScreen = () => {
+  const { currentAppState, isActive, lastActiveTimestamp, location } = useAppState();
+
   return (
     <View style={styles.container}>
-      <Text>HomeScreen</Text>
+      <AppText.Paragraph
+        text={JSON.stringify({ currentAppState, isActive, lastActiveTimestamp, location }, null, 2)}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
-  },
-});
 
 export default HomeScreen;
