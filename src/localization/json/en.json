@@ -1,5 +1,8 @@
 {
     "splash-page": {
         "title": "Splash Page"
+    },
+    "home-page": {
+        "title": "Home Page"
     }
 }
