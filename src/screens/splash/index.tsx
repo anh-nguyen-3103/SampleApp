@@ -39,7 +39,7 @@ const SplashScreen = () => {
     );
 
     const timeout = setTimeout(() => {
-      navigation.replace('Registration');
+      navigation.replace('Main');
     }, 3000);
 
     return () => clearTimeout(timeout);
