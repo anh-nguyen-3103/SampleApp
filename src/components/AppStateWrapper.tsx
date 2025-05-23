@@ -6,7 +6,7 @@
 
 import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
 import React, { createContext, FC, useContext, useEffect, useRef, useState } from 'react';
-import { AppState, AppStateStatus, View } from 'react-native';
+import { AppState, AppStateStatus, StatusBar, useColorScheme, View } from 'react-native';
 
 /**
  * @interface AppStateContextType
@@ -50,6 +50,8 @@ type Props = { children?: React.ReactNode };
 export const AppStateWrapper: FC<Props> = ({ children }) => {
   // Ref to keep track of previous app state across renders
   const appStateRef = useRef(AppState.currentState);
+  // Hook to detect device color scheme (light/dark mode) for StatusBar styling
+  const colorScheme = useColorScheme();
 
   // State variables to track app status and location
   const [currentAppState, setCurrentAppState] = useState<AppStateStatus>(AppState.currentState);
@@ -111,6 +113,7 @@ export const AppStateWrapper: FC<Props> = ({ children }) => {
 
   return (
     <AppStateContext.Provider value={contextValue}>
+      <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       <View style={{ flex: 1 }}>{children}</View>
     </AppStateContext.Provider>
   );

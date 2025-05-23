@@ -1,14 +1,15 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type RootParamList = {
     Splash: undefined;
-    Registration: undefined;
     Main: MainParamList | undefined;
 };
 
 export type MainParamList = {
     Home: undefined;
+    Notes: undefined;
+    Profile: undefined;
 };
 
 export type AppNavigationProp = NativeStackNavigationProp<
